@@ -33,7 +33,7 @@
 - Path params: -
 - Query params: -
 - Validations: -
-- Return type:
+- Returns:
   ```
   {
     "version": string,
@@ -50,7 +50,7 @@
 - Query params: -
 - Validations:
   - `date` should be of format `yyyymmdd` representing a valid date
-- Return type:
+- Returns:
   ```
   [ Event ]
   ```
@@ -63,7 +63,7 @@
 - Path params: -
 - Query params: -
 - Validations: -
-- Return type:
+- Returns:
   ```
   [ Template ]
   ```
@@ -75,7 +75,7 @@
   - `id`: Unique identifier for a template
 - Query params: -
 - Validations: -
-- Return type:
+- Returns:
   ```
   Template
   ```
@@ -86,7 +86,7 @@
 - Path params: -
 - Query params: -
 - Validations: -
-- Return type:
+- Returns:
   ```
   [ ActiveTemplate ]
   ```
@@ -97,7 +97,7 @@
 - Path params: -
 - Query params: -
 - Validations: -
-- Return type:
+- Returns:
   ```
   [ ActiveTemplate ]
   ```
@@ -108,7 +108,7 @@
 - Path params: -
 - Query params: -
 - Validations: -
-- Return type:
+- Returns:
   ```
   [ Tag ]
   ```
@@ -119,7 +119,7 @@
 - Path params: -
 - Query params: -
 - Validations: -
-- Return type:
+- Returns:
   ```
   Tag
   ```
@@ -130,33 +130,255 @@
 - Path params: -
 - Query params: -
 - Validations: -
-- Return type:
+- Returns:
 - Response guarantees: -
   ```
   Stats
   ```
 
+***
+
 ### POST `/api/events`
+
+- Path params: -
+- Body:
+  ```
+  {
+    "name": string,
+    "date": string,
+    "startTime": string,
+    "endTime": string,
+    "trackingType": string in ["UNTRACKED", "TRACKED", "TIME_TRACKED"]
+    "tagId": string OR null
+  }
+  ```
+- Validations:
+  - Standard event validations:
+    - `name` should be a non-empty string (after trimming spaces)
+    - `endTime` should not be earlier than `startTime`
+    - Either `tagId` is valid (there should be a tag existing with given id) or
+      it is `null` meaning no tag should be associated with this event.
+- Returns:
+  ```
+  Event
+  ```
 
 ### POST `/api/tags`
 
+- Path params: -
+- Body:
+  ```
+  {
+    "name": string,
+    "color": string
+  }
+  ```
+- Validations:
+  - Standard tag validations:
+    - `name` should be a non-empty string (after trimming spaces)
+    - `color` should be of form `#rrggbb` representing a valid color.
+- Returns: Created tag
+  ```
+  Tag
+  ```
+
 ### POST `/api/templates`
+
+- Path params: -
+- Body:
+  ```
+  [
+    {
+      "name": string,
+      "startTime": string,
+      "endTime": string,
+      "trackingType": string in ["UNTRACKED", "TRACKED", "TIME_TRACKED"]
+      "tagId": string OR null
+    }
+  ]
+  ```
+- Validations:
+  - Standard event validations apply to each event.
+- Returns:  
+  ```
+  Template
+  ```
 
 ### POST `/api/templates/active`
 
+- Path params: -
+- Body:
+  ```
+  {
+    "templateId": string,
+    "startingDate": string
+    "repeatCriteria": string in ["CUSTOM", "WEEKLY", "MONTHLY", "FREQUENCY"]
+    "repeatCriteriaData": ?
+  }
+  ```
+- Validations:
+  - Standard active template validations:
+    - There should be a template existing with given `templateId`.
+    - `startingDate` has format `yyyymmdd` representing a valid date.
+    - `repeatCriteriaData` is expected to be in a particular format depending on `repeatCriteria`
+      - If `CUSTOM`, it should be a list of strings of format `yyyymmdd` representing distinct dates.
+      - If `WEEKLY`, it should be a list of distinct integers from 1 to 7.
+      - If `MONTHLY`, it should be a list of distinct integers from 1 to 31.
+      - If `FREQUENCY`, it should be a positive integer.
+- Returns: Created active template
+  ```
+  ActiveTemplate
+  ```
+
 ### PUT `/api/events`
+
+- Path params: -
+- Body:
+  ```
+  {
+    "id": string,
+    "name": string,
+    "date": string,
+    "startTime": string,
+    "endTime": string,
+    "trackingType": string in ["UNTRACKED", "TRACKED", "TIME_TRACKED"]
+    "tagId": string OR null
+  }
+  ```
+- Validations:
+  - There should be an event existing with given `id`.
+  - Standard event validations are applicable.
+- Returns: Updated event
+  ```
+  Event
+  ```
 
 ### PUT `/api/templates`
 
+- Path params: -
+- Body:
+  ```
+  {
+    "id": string,
+    "events": [
+      {
+        "name": string,
+        "startTime": string,
+        "endTime": string,
+        "trackingType": string in ["UNTRACKED", "TRACKED", "TIME_TRACKED"]
+        "tagId": string OR null
+      }
+    ]
+  }
+  ```
+- Validations:
+  - There should be a template existing with given `id`.
+  - Standard event validations apply to each event.
+- Returns: Updated template
+  ```
+  Template
+  ```
+
 ### PUT `/api/templates/active`
+
+- Path params: -
+- Body:
+  ```
+  {
+    "id": string,
+    "templateId": string,
+    "startingDate": string
+    "repeatCriteria": string in ["CUSTOM", "WEEKLY", "MONTHLY", "FREQUENCY"]
+    "repeatCriteriaData": ?
+  }
+  ```
+- Validations:
+  - There should be an active template existing with given `id`.
+  - Standard active template validations apply.
+- Returns: Updated active template
+  ```
+  ActiveTemplate
+  ```
 
 ### PUT `/api/tags`
 
+- Path params: -
+- Body:
+  ```
+  {
+    "id": string,
+    "name": string,
+    "color": string
+  }
+  ```
+- Validations:
+  - There should be a tag existing with given `id`.
+  - Standard tag validations apply
+- Returns: Updated tag
+  ```
+  Tag
+  ```
+
+***
+
 ### DELETE `/api/events`
+
+- Path params: -
+- Body:
+  ```
+  {
+    "id": string
+  }
+  ```
+- Validations:
+- Returns:
+  ```
+  StandardResult
+  ```
 
 ### DELETE `/api/templates/active`
 
+- Path params: -
+- Body:
+  ```
+  {
+    "id": string
+  }
+  ```
+- Validations:
+- Returns:  
+  ```
+  StandardResult
+  ```
+
 ### DELETE `/api/templates`
+
+- Path params: -
+- Body:
+  ```
+  {
+    "id": string
+  }
+  ```
+- Validations:
+- Returns:  
+  ```
+  StandardResult
+  ```
 
 ### DELETE `/api/tags`
 
+- Path params: -
+- Body:
+  ```
+  {
+    "id": string
+  }
+  ```
+- Validations:
+- Returns:
+  ```
+  StandardResult
+  ```
+
+***
