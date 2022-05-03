@@ -33,7 +33,7 @@
 - Path params: -
 - Query params: -
 - Validations: -
-- Returns:
+- Returns (on success):
   ```
   {
     "version": string,
@@ -41,6 +41,7 @@
     "content": string
   }
   ```
+- Returns (on failure): -
 - Response guarantees: -
 
 ### GET `/api/events/:date`
@@ -50,9 +51,16 @@
 - Query params: -
 - Validations:
   - `date` should be of format `yyyymmdd` representing a valid date
-- Returns:
+- Returns (on success):
+- Returns (on success):
   ```
   [ Event ]
+  ```
+- Returns (on failure):
+  ```
+  {
+    "errorMessage": string
+  }
   ```
 - Response guarantees:
   - Events will be sorted first by start times then end times then name.
@@ -63,10 +71,11 @@
 - Path params: -
 - Query params: -
 - Validations: -
-- Returns:
+- Returns (on success):
   ```
   [ Template ]
   ```
+- Returns (on failure): -
 - Response guarantees: -
 
 ### GET `/api/templates/:id`
@@ -75,9 +84,15 @@
   - `id`: Unique identifier for a template
 - Query params: -
 - Validations: -
-- Returns:
+- Returns (on success):
   ```
   Template
+  ```
+- Returns (on failure):
+  ```
+  {
+    "errorMessage": string
+  }
   ```
 - Response guarantees: -
 
@@ -86,10 +101,11 @@
 - Path params: -
 - Query params: -
 - Validations: -
-- Returns:
+- Returns (on success):
   ```
   [ ActiveTemplate ]
   ```
+- Returns (on failure): -
 - Response guarantees: -
 
 ### GET `/api/templates/active/:id`
@@ -97,9 +113,15 @@
 - Path params: -
 - Query params: -
 - Validations: -
-- Returns:
+- Returns (on success):
   ```
-  [ ActiveTemplate ]
+  ActiveTemplate
+  ```
+- Returns (on failure):
+  ```
+  {
+    "errorMessage": string
+  }
   ```
 - Response guarantees: -
 
@@ -108,10 +130,11 @@
 - Path params: -
 - Query params: -
 - Validations: -
-- Returns:
+- Returns (on success):
   ```
   [ Tag ]
   ```
+- Returns (on failure): -
 - Response guarantees: -
 
 ### GET `/api/tags/:id`
@@ -119,9 +142,15 @@
 - Path params: -
 - Query params: -
 - Validations: -
-- Returns:
+- Returns (on success):
   ```
   Tag
+  ```
+- Returns (on failure):
+  ```
+  {
+    "errorMessage": string
+  }
   ```
 - Response guarantees: -
 
@@ -130,11 +159,12 @@
 - Path params: -
 - Query params: -
 - Validations: -
-- Returns:
-- Response guarantees: -
+- Returns (on success):
   ```
   Stats
   ```
+- Returns (on failure): -
+- Response guarantees: -
 
 ***
 
@@ -158,9 +188,15 @@
     - `endTime` should not be earlier than `startTime`
     - Either `tagId` is valid (there should be a tag existing with given id) or
       it is `null` meaning no tag should be associated with this event.
-- Returns:
+- Returns (on success):
   ```
   Event
+  ```
+- Returns (on failure):
+  ```
+  {
+    "errorMessage": string
+  }
   ```
 
 ### POST `/api/tags`
@@ -177,9 +213,15 @@
   - Standard tag validations:
     - `name` should be a non-empty string (after trimming spaces)
     - `color` should be of form `#rrggbb` representing a valid color.
-- Returns: Created tag
+- Returns (on success): Created tag
   ```
   Tag
+  ```
+- Returns (on failure):
+  ```
+  {
+    "errorMessage": string
+  }
   ```
 
 ### POST `/api/templates`
@@ -199,9 +241,15 @@
   ```
 - Validations:
   - Standard event validations apply to each event.
-- Returns:  
+- Returns (on success):  
   ```
   Template
+  ```
+- Returns (on failure):
+  ```
+  {
+    "errorMessage": string
+  }
   ```
 
 ### POST `/api/templates/active`
@@ -225,9 +273,15 @@
       - If `WEEKLY`, it should be a list of distinct integers from 1 to 7.
       - If `MONTHLY`, it should be a list of distinct integers from 1 to 31.
       - If `FREQUENCY`, it should be a positive integer.
-- Returns: Created active template
+- Returns (on success): Created active template
   ```
   ActiveTemplate
+  ```
+- Returns (on failure):
+  ```
+  {
+    "errorMessage": string
+  }
   ```
 
 ### PUT `/api/events`
@@ -248,9 +302,15 @@
 - Validations:
   - There should be an event existing with given `id`.
   - Standard event validations are applicable.
-- Returns: Updated event
+- Returns (on success): Updated event
   ```
   Event
+  ```
+- Returns (on failure):
+  ```
+  {
+    "errorMessage": string
+  }
   ```
 
 ### PUT `/api/templates`
@@ -274,9 +334,15 @@
 - Validations:
   - There should be a template existing with given `id`.
   - Standard event validations apply to each event.
-- Returns: Updated template
+- Returns (on success): Updated template
   ```
   Template
+  ```
+- Returns (on failure):
+  ```
+  {
+    "errorMessage": string
+  }
   ```
 
 ### PUT `/api/templates/active`
@@ -295,9 +361,15 @@
 - Validations:
   - There should be an active template existing with given `id`.
   - Standard active template validations apply.
-- Returns: Updated active template
+- Returns (on success): Updated active template
   ```
   ActiveTemplate
+  ```
+- Returns (on failure):
+  ```
+  {
+    "errorMessage": string
+  }
   ```
 
 ### PUT `/api/tags`
@@ -314,7 +386,7 @@
 - Validations:
   - There should be a tag existing with given `id`.
   - Standard tag validations apply
-- Returns: Updated tag
+- Returns (on success): Updated tag
   ```
   Tag
   ```
@@ -331,9 +403,17 @@
   }
   ```
 - Validations:
-- Returns:
+- Returns (on success):
   ```
-  StandardResult
+  {
+    "message": string
+  }
+  ```
+- Returns (on failure):
+  ```
+  {
+    "errorMessage": string
+  }
   ```
 
 ### DELETE `/api/templates/active`
@@ -346,9 +426,17 @@
   }
   ```
 - Validations:
-- Returns:  
+- Returns (on success):  
   ```
-  StandardResult
+  {
+    "message": string
+  }
+  ```
+- Returns (on failure):
+  ```
+  {
+    "errorMessage": string
+  }
   ```
 
 ### DELETE `/api/templates`
@@ -361,9 +449,17 @@
   }
   ```
 - Validations:
-- Returns:  
+- Returns (on success):  
   ```
-  StandardResult
+  {
+    "message": string
+  }
+  ```
+- Returns (on failure):
+  ```
+  {
+    "errorMessage": string
+  }
   ```
 
 ### DELETE `/api/tags`
@@ -376,9 +472,17 @@
   }
   ```
 - Validations:
-- Returns:
+- Returns (on success):
   ```
-  StandardResult
+  {
+    "message": string
+  }
+  ```
+- Returns (on failure):
+  ```
+  {
+    "errorMessage": string
+  }
   ```
 
 ***
