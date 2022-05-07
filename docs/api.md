@@ -13,6 +13,8 @@
 | GET | `/api/tags` |
 | GET | `/api/tags/:id` |
 | GET | `/api/stats` |
+| POST | `/api/register` |
+| POST | `/api/login` |
 | POST | `/api/events` |
 | POST | `/api/tags` |
 | POST | `/api/templates` |
@@ -167,6 +169,53 @@
 - Response guarantees: -
 
 ***
+
+### POST `/api/register`
+
+- Path params: -
+- Body:
+  ```
+  {
+    "userName": string,
+    "email": string,
+    "password": string
+  }
+  ```
+- Validations:
+  
+- Returns (on success):
+  ```
+  User
+  ```
+- Returns (on failure):
+  ```
+  {
+    "errorMessage": string
+  }
+  ```
+
+### POST `/api/login`
+
+- Path params: -
+- Body:
+  ```
+  {
+    "userName": string,
+    "password": string
+  }
+  ```
+- Validations:
+  
+- Returns (on success):
+  ```
+  User
+  ```
+- Returns (on failure):
+  ```
+  {
+    "errorMessage": string
+  }
+  ```  
 
 ### POST `/api/events`
 
@@ -492,6 +541,7 @@
 ### Event
 ```
 {
+  "userId": string,
   "id": string OR null,
   "activeTemplateId": string OR null,
   "name": string,
@@ -508,9 +558,20 @@ Notes:
   an active template. In that case, an active template with `activeTemplateId` exists.
 - If `id` is not `null`, `activeTemplateId` is guaranteed to be `null`.
 
+### User 
+```
+{
+  "id" : string
+  "userName" : string,
+  "email" : string,
+  "password" : string
+}
+```
+
 ### Template
 ```
 {
+  "userId": string,
   "id": string,
   "events": [
     {
@@ -527,6 +588,7 @@ Notes:
 ### ActiveTemplate
 ```
 {
+  "userId": string,
   "id": string,
   "templateId": string,
   "startingDate": string
@@ -538,6 +600,7 @@ Notes:
 ### Tag
 ```
 {
+  "userId": string,
   "id": string,
   "name": string,
   "color": string
@@ -548,6 +611,7 @@ Notes:
 
 ```
 {
+  "userId": string,
   "allTime": [ StatsSubObject ]
   "lastWeek": [ StatsSubObject ]
   "lastMonth": [ StatsSubObject ]
