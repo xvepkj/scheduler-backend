@@ -2,12 +2,14 @@
   "name": "scheduler-backend",
   "version": "1.0.0",
   "description": "Node.JS and MongoDB powered backend for scheduler app",
-  "main": "index.js",
+  "main": "server.js",
+  "type": "module",
   "directories": {
     "doc": "docs"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha ./test/**/*.test.js -b",
+    "start-dev": "set DEBUG=app:* && node start.js"
   },
   "repository": {
     "type": "git",
