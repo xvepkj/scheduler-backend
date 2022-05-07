@@ -33,5 +33,5 @@ jobs:
       #     mongodb-replica-set: test-rs
       - run: cp .env.template .env
       - run: npm ci
-      - run: npx eslint "*/**"
+      - run: npx eslint "./**"
       - run: npm test
