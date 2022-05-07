@@ -28,5 +28,5 @@ after(function () {
   server.stop();
 });
 
-import tagsTests from "./api/tags.js"
-describe("TAGS", tagsTests)
+import tagsTests from "./api/tags.js";
+describe("TAGS", tagsTests);

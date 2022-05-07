@@ -1,4 +1,4 @@
-import Debug from "debug"
+import Debug from "debug";
 const debug = Debug("test:helper");
 
 import request from "supertest";
@@ -39,7 +39,7 @@ th.request.get = (path, query, expected, done) => {
   debug("%O", [path, query, expected]);
   request(global.httpServer)
     .get(path)
-//    .set("Cookie", cookie) // for authentication
+  //    .set("Cookie", cookie) // for authentication
     .query(query)
     .set("Accept", "application/json")
     .expect("Content-Type", /json/)
@@ -55,7 +55,7 @@ th.request.post = (path, body, expected, done) => {
   debug("%O", [path, body, expected]);
   request(global.httpServer)
     .post(path)
-//    .set("Cookie", cookie) // for authentication
+  //    .set("Cookie", cookie) // for authentication
     .send(body)
     .set("Accept", "application/json")
     .expect("Content-Type", /json/)
@@ -71,7 +71,7 @@ th.request.put = (path, body, expected, done) => {
   debug("%O", [path, body, expected]);
   request(global.httpServer)
     .put(path)
-//    .set("Cookie", cookie) // for authentication
+  //    .set("Cookie", cookie) // for authentication
     .send(body)
     .set("Accept", "application/json")
     .expect("Content-Type", /json/)
@@ -87,7 +87,7 @@ th.request.delete = (path, body, expected, done) => {
   debug("%O", [path, body, expected]);
   request(global.httpServer)
     .delete(path)
-//    .set("Cookie", cookie) // for authentication
+  //    .set("Cookie", cookie) // for authentication
     .send(body)
     .set("Accept", "application/json")
     .expect("Content-Type", /json/)

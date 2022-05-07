@@ -1,13 +1,13 @@
 // Environment variables from .env
-import dotenv from "dotenv"
-dotenv.config()
+import dotenv from "dotenv";
+dotenv.config();
 
-import Debug from "debug"
-const debug = Debug("app:main")
+import Debug from "debug";
+const debug = Debug("app:main");
 
-import express from "express"
+import express from "express";
 
-import apiRouter from "../routes/api.js"
+import apiRouter from "../routes/api.js";
 
 const server = {};
 
@@ -17,7 +17,7 @@ server.httpServer = null;
 server.isTestEnv = false;
 
 server.start = async function () {
-  debug("Starting server")
+  debug("Starting server");
   /*********************************
   /* Express Setup 
   /*********************************/
@@ -41,4 +41,4 @@ server.stop = function () {
   });
 };
 
-export default server
+export default server;
