@@ -551,7 +551,6 @@
 ### Event
 ```
 {
-  "userId": string,
   "id": string OR null,
   "activeTemplateId": string OR null,
   "name": string,
@@ -571,7 +570,6 @@ Notes:
 ### Template
 ```
 {
-  "userId": string,
   "id": string,
   "events": [
     {
@@ -588,7 +586,6 @@ Notes:
 ### ActiveTemplate
 ```
 {
-  "userId": string,
   "id": string,
   "templateId": string,
   "startingDate": string
@@ -600,7 +597,6 @@ Notes:
 ### Tag
 ```
 {
-  "userId": string,
   "id": string,
   "name": string,
   "color": string
@@ -611,7 +607,6 @@ Notes:
 
 ```
 {
-  "userId": string,
   "allTime": [ StatsSubObject ]
   "lastWeek": [ StatsSubObject ]
   "lastMonth": [ StatsSubObject ]
