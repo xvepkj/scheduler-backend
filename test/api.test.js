@@ -30,3 +30,6 @@ after(function () {
 
 import tagsTests from "./api/tags.js";
 describe("TAGS", tagsTests);
+
+import eventTests from "./api/events.js";
+describe("EVENTS", eventTests);

@@ -1,5 +1,5 @@
 import Debug from "debug";
-const debug = Debug("test:helper");
+const debug = Debug("app:helper");
 
 import request from "supertest";
 import { expect } from "chai";
@@ -184,6 +184,23 @@ th.gen.put.fail = (route) => {
   return function (desc, body, message) {
     it(desc, function (done) {
       th.request.put(route, body, result.fail(message), done);
+    });
+  };
+};
+
+th.gen.delete.pass = (route, dataGenerator) => {
+  return function (desc, body) {
+    it(desc, function (done) {
+      let data = dataGenerator(body);
+      th.request.delete(route, body, result.pass(data), done);
+    });
+  };
+};
+
+th.gen.delete.fail = (route) => {
+  return function (desc, body, message) {
+    it(desc, function (done) {
+      th.request.delete(route, body, result.fail(message), done);
     });
   };
 };
