@@ -8,7 +8,7 @@
     "doc": "docs"
   },
   "scripts": {
-    "test": "set DEBUG=app:* && mocha ./test/**/*.test.js -b",
+    "test": "mocha ./test/**/*.test.js -b",
     "start-dev": "set DEBUG=app:* && node start.js"
   },
   "repository": {

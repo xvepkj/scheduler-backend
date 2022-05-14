@@ -1,5 +1,5 @@
 import Debug from "debug";
-const debug = Debug("app:helper");
+const debug = Debug("test:helper");
 
 import request from "supertest";
 import { expect } from "chai";
