@@ -13,6 +13,6 @@ ec.events.INVALID_TIME_FORMAT = "Invalid Time Format";
 
 ec.events.INVALID_TIME_VALUES = "Invalid Time Values";
 
-ec.events.INVALID_REQ = "Event not found"
+ec.events.INVALID_REQ = "Event not found";
 
 export default ec;

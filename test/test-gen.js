@@ -26,7 +26,7 @@ test.events.all = {};
 test.events.delete = {};
 test.events.update = {};
 test.events.all.pass = th.gen.get.pass("/api/events", (d) => { return eventsApi.all(d);}); 
-test.events.delete.pass = th.gen.delete.pass("/api/events",(obj) => { return eventsApi.delete(obj.id) });
+test.events.delete.pass = th.gen.delete.pass("/api/events",(obj) => { return eventsApi.delete(obj.id); });
 test.events.update.pass = th.gen.put.pass("/api/events",(b) => {return eventsApi.update(b);});
 
 // test.tags.one = {};

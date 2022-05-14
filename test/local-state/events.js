@@ -1,5 +1,5 @@
 const data = {
-    events: []
+  events: []
 };
 
 const eventsApi = {};
@@ -7,26 +7,26 @@ const eventsApi = {};
 var counter = 0;
 
 eventsApi.all = (d) => {
-    return data.events.filter((e) => d === JSON.stringify(e.date) );
-}
+  return data.events.filter((e) => d === JSON.stringify(e.date) );
+};
 
 eventsApi.add = (e) => {
-    e.id = counter++;
-    e.id = e.id.toString()
-    data.events.push(e);
-    return e;
-}
+  e.id = counter++;
+  e.id = e.id.toString();
+  data.events.push(e);
+  return e;
+};
 
 eventsApi.update = (event) => {
-    const updatedEvent =  data.events.filter((e) => event.id === JSON.stringify(e.id) );
-    const eventIndex = data.events.indexOf(updatedEvent[0])
-    data.events[eventIndex] = event
-    return event;
-}
+  const updatedEvent =  data.events.filter((e) => event.id === JSON.stringify(e.id) );
+  const eventIndex = data.events.indexOf(updatedEvent[0]);
+  data.events[eventIndex] = event;
+  return event;
+};
 
 eventsApi.delete = (id) => {
-    data.events = data.events.filter((e) =>id !== JSON.stringify(e.id) );
-    return {message: "Success"};
+  data.events = data.events.filter((e) =>id !== JSON.stringify(e.id) );
+  return {message: "Success"};
 };
 
 export default eventsApi;
