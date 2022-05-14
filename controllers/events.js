@@ -1,30 +1,30 @@
 import Debug from "debug";
 import ec from "../util/error-codes.js";
-import util from "../util/util.js"
+import util from "../util/util.js";
 const debug = Debug("app:eventController");
 
 const data = {
-    events: [],
-    counter: 0,
-}
+  events: [],
+  counter: 0,
+};
 
 var eventController = {};
 
 const eventTypes = Object.freeze({
-    untracked : "UNTRACKED",
-    tracked : "TRACKED",
-    logged : "TIME_TRACKED"
-})
+  untracked : "UNTRACKED",
+  tracked : "TRACKED",
+  logged : "TIME_TRACKED"
+});
 
 const validateEvent = (e) => {
-    var error = "";
-    if( !e.name || 
-        !e.date || 
-        !e.startTime || 
-        !e.endTime || 
-        !Object.values(eventTypes).includes(e.trackingType)) {
-            error = ec.events.INCOMPLETE 
-        } 
+  var error = "";
+  if( !e.name || 
+    !e.date || 
+    !e.startTime || 
+    !e.endTime || 
+    !Object.values(eventTypes).includes(e.trackingType)) {
+      error = ec.events.INCOMPLETE 
+    } 
     else if(!util.date.isValid(e.date)) error =  ec.events.INVALID_DATE_FORMAT 
     else if(!util.time.isValid(e.startTime)) error = ec.events.INVALID_TIME_FORMAT
     else if(!util.time.isValid(e.endTime)) error = ec.events.INVALID_TIME_FORMAT
