@@ -5,7 +5,6 @@ export default function() {
   test.events.add.pass(
     "Adds a event",
     {
-      activeTemplateId: "null",
       name: "study",
       date: "2022-03-22",
       startTime: "11:30",
@@ -17,7 +16,6 @@ export default function() {
   test.events.add.pass(
     "Adds another event",
     {
-      activeTemplateId: "null",
       name: "play",
       date: "2022-03-22",
       startTime: "15:30",
@@ -39,7 +37,6 @@ export default function() {
     "Update an event",
     {
       id: "1",
-      activeTemplateId: "null",
       name: "study-updated",
       date: "2022-03-22",
       startTime: "11:30",
