@@ -188,4 +188,21 @@ th.gen.put.fail = (route) => {
   };
 };
 
+th.gen.delete.pass = (route, dataGenerator) => {
+  return function (desc, body) {
+    it(desc, function (done) {
+      let data = dataGenerator(body);
+      th.request.delete(route, body, result.pass(data), done);
+    });
+  };
+};
+
+th.gen.delete.fail = (route) => {
+  return function (desc, body, message) {
+    it(desc, function (done) {
+      th.request.delete(route, body, result.fail(message), done);
+    });
+  };
+};
+
 export default th;
