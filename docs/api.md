@@ -278,15 +278,18 @@
 - Path params: -
 - Body:
   ```
-  [
-    {
-      "name": string,
-      "startTime": string,
-      "endTime": string,
-      "trackingType": string in ["UNTRACKED", "TRACKED", "TIME_TRACKED"]
-      "tagId": string OR null
-    }
-  ]
+  {
+    "name": string
+    [
+      {
+        "name": string,
+        "startTime": string,
+        "endTime": string,
+        "trackingType": string in ["UNTRACKED", "TRACKED", "TIME_TRACKED"]
+        "tagId": string OR null
+      }
+    ]
+  }
   ```
 - Validations:
   - Standard event validations apply to each event.
@@ -369,6 +372,7 @@
   ```
   {
     "id": string,
+    "name": string,
     "events": [
       {
         "name": string,
