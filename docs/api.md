@@ -13,6 +13,8 @@
 | GET | `/api/tags` |
 | GET | `/api/tags/:id` |
 | GET | `/api/stats` |
+| POST | `/api/register` |
+| POST | `/api/login` |
 | POST | `/api/events` |
 | POST | `/api/tags` |
 | POST | `/api/templates` |
@@ -168,6 +170,53 @@
 
 ***
 
+### POST `/api/register`
+
+- Path params: -
+- Body:
+  ```
+  {
+    "userName": string,
+    "email": string,
+    "password": string
+  }
+  ```
+- Validations:
+  
+- Returns (on success):
+  ```
+  User
+  ```
+- Returns (on failure):
+  ```
+  {
+    "errorMessage": string
+  }
+  ```
+
+### POST `/api/login`
+
+- Path params: -
+- Body:
+  ```
+  {
+    "userName": string,
+    "password": string
+  }
+  ```
+- Validations:
+  
+- Returns (on success):
+  ```
+  User
+  ```
+- Returns (on failure):
+  ```
+  {
+    "errorMessage": string
+  }
+  ```  
+
 ### POST `/api/events`
 
 - Path params: -
@@ -229,15 +278,18 @@
 - Path params: -
 - Body:
   ```
-  [
-    {
-      "name": string,
-      "startTime": string,
-      "endTime": string,
-      "trackingType": string in ["UNTRACKED", "TRACKED", "TIME_TRACKED"]
-      "tagId": string OR null
-    }
-  ]
+  {
+    "name": string,
+    "events": [
+      {
+        "name": string,
+        "startTime": string,
+        "endTime": string,
+        "trackingType": string in ["UNTRACKED", "TRACKED", "TIME_TRACKED"]
+        "tagId": string OR null
+      }
+    ]
+  }
   ```
 - Validations:
   - Standard event validations apply to each event.
@@ -320,6 +372,7 @@
   ```
   {
     "id": string,
+    "name": string,
     "events": [
       {
         "name": string,
@@ -488,6 +541,16 @@
 ***
 
 ## Schemas
+
+### User 
+```
+{
+  "id" : string
+  "userName" : string,
+  "email" : string,
+  "password" : string
+}
+```
 
 ### Event
 ```
