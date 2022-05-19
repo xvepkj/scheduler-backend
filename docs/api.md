@@ -279,8 +279,8 @@
 - Body:
   ```
   {
-    "name": string
-    [
+    "name": string,
+    "events": [
       {
         "name": string,
         "startTime": string,
