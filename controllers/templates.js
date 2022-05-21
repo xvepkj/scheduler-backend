@@ -8,7 +8,7 @@ const debug = Debug("app:templateController");
 var validator = new jsonSchema.Validator();
 validator.addSchema(partialEventSchema);
 
-const data = {
+export const data = {
   templates: [],
   counter: 0
 };
