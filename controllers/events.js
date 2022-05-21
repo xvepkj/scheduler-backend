@@ -68,7 +68,7 @@ eventController.delete = (req, res) => {
   const deletedEvent =  data.events.filter((e) => req.body.id === e.id );
   if(deletedEvent.length === 0) res.json({errorMessage : ec.events.INVALID_REQ});
   else {
-    data.events = data.events.filter((e) => req.body.id !== JSON.stringify(e.id) );
+    data.events = data.events.filter((e) => req.body.id !== e.id );
     res.json( {message : "Success"} );
   }
 };

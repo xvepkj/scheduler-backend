@@ -33,3 +33,6 @@ describe("TAGS", tagsTests);
 
 import eventTests from "./api/events.js";
 describe("EVENTS", eventTests);
+
+import templateTests from "./api/templates.js";
+describe("TEMPLATES",templateTests)

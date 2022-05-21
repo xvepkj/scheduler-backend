@@ -18,14 +18,14 @@ eventsApi.add = (e) => {
 };
 
 eventsApi.update = (event) => {
-  const updatedEvent =  data.events.filter((e) => event.id === JSON.stringify(e.id) );
+  const updatedEvent =  data.events.filter((e) => event.id === e.id );
   const eventIndex = data.events.indexOf(updatedEvent[0]);
   data.events[eventIndex] = event;
   return event;
 };
 
 eventsApi.delete = (id) => {
-  data.events = data.events.filter((e) =>id !== JSON.stringify(e.id) );
+  data.events = data.events.filter((e) =>id !== e.id );
   return {message: "Success"};
 };
 

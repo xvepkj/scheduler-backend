@@ -1,6 +1,8 @@
 import th from "./test-helper.js";
 import tagsApi from "./local-state/tags.js";
 import eventsApi from "./local-state/events.js";
+import templatesApi from "./local-state/templates.js";
+
 /**
  * Functions to generate tests specific to routes
  */
@@ -28,6 +30,19 @@ test.events.update = {};
 test.events.all.pass = th.gen.get.pass("/api/events", (d) => { return eventsApi.all(d);}); 
 test.events.delete.pass = th.gen.delete.pass("/api/events",(obj) => { return eventsApi.delete(obj.id); });
 test.events.update.pass = th.gen.put.pass("/api/events",(b) => {return eventsApi.update(b);});
+
+test.templates = {};
+
+test.templates.all = {};
+test.templates.add = {};
+test.templates.update = {};
+test.templates.delete = {};
+test.templates.getById = {};
+test.templates.add.pass = th.gen.post.pass("/api/templates", (d) => { return templatesApi.add(d); })
+test.templates.all.pass = th.gen.get.pass("/api/templates", () => { return templatesApi.all(); })
+test.templates.update.pass = th.gen.put.pass("/api/templates", (d) => { return templatesApi.update(d); })
+test.templates.delete.pass = th.gen.delete.pass("/api/templates", (d) => { return templatesApi.delete(d); })
+test.templates.getById.pass = th.gen.get.pass("/api/templates", (id) => { return templatesApi.getById(id); })
 
 // test.tags.one = {};
 // test.tags.add = {};

@@ -28,8 +28,8 @@ server.start = async function () {
   app.use(apiRouter);
 
   return new Promise((resolve) => {
-    server.httpServer = app.listen(process.env.PORT, function () {
-      debug("Server started @ port " + process.env.PORT);
+    server.httpServer = app.listen(5000, function () {
+      debug("Server started @ port " + 5000);
       resolve(true);
     });
   });
