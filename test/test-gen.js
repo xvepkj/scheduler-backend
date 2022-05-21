@@ -38,11 +38,11 @@ test.templates.add = {};
 test.templates.update = {};
 test.templates.delete = {};
 test.templates.getById = {};
-test.templates.add.pass = th.gen.post.pass("/api/templates", (d) => { return templatesApi.add(d); })
-test.templates.all.pass = th.gen.get.pass("/api/templates", () => { return templatesApi.all(); })
-test.templates.update.pass = th.gen.put.pass("/api/templates", (d) => { return templatesApi.update(d); })
-test.templates.delete.pass = th.gen.delete.pass("/api/templates", (d) => { return templatesApi.delete(d); })
-test.templates.getById.pass = th.gen.get.pass("/api/templates", (id) => { return templatesApi.getById(id); })
+test.templates.add.pass = th.gen.post.pass("/api/templates", (d) => { return templatesApi.add(d); });
+test.templates.all.pass = th.gen.get.pass("/api/templates", () => { return templatesApi.all(); });
+test.templates.update.pass = th.gen.put.pass("/api/templates", (d) => { return templatesApi.update(d); });
+test.templates.delete.pass = th.gen.delete.pass("/api/templates", (d) => { return templatesApi.delete(d); });
+test.templates.getById.pass = th.gen.get.pass("/api/templates", (id) => { return templatesApi.getById(id); });
 
 // test.tags.one = {};
 // test.tags.add = {};

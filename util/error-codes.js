@@ -18,6 +18,6 @@ ec.events.INVALID_REQ = "Event not found";
 
 ec.templates.INVALID_TEMPLATE = "Illegal Template";
 
-ec.templates.INVALID_REQ = "Invalid Requirement"
+ec.templates.INVALID_REQ = "Invalid Requirement";
 
 export default ec;

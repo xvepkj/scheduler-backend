@@ -15,7 +15,7 @@ apiRouter.delete("/api/events", eventsController.delete);
 apiRouter.put("/api/events", eventsController.update);
 apiRouter.post("/api/templates", templatesController.add);
 apiRouter.get("/api/templates", templatesController.all);
-apiRouter.put("/api/templates", templatesController.update)
+apiRouter.put("/api/templates", templatesController.update);
 apiRouter.delete("/api/templates", templatesController.delete);
 apiRouter.get("/api/templates/:id", templatesController.getById);
 
