@@ -36,3 +36,6 @@ describe("EVENTS", eventTests);
 
 import templateTests from "./api/templates.js";
 describe("TEMPLATES",templateTests);
+
+import activeTemplateTests from "./api/active-templates.js";
+describe("ACTIVE TEMPLATES", activeTemplateTests);
