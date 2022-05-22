@@ -27,25 +27,25 @@ tagsController.update = (req, res) => {
     res.json({ errorMessage: ec.tags.INVALID_SCHEMA});
     return;
   }
-  var index = data.tags.findIndex(t => t.id === tag.id)
+  var index = data.tags.findIndex(t => t.id === tag.id);
   if (index === -1) {
     res.json({ errorMessage: ec.tags.INVALID_ID });
   } else {
     data.tags[index] = tag;
-    res.json(tag)
+    res.json(tag);
   }
-}
+};
 
 tagsController.delete = (req, res) => {
   var id = req.body.id;
-  var index = data.tags.findIndex(t => t.id === id)
+  var index = data.tags.findIndex(t => t.id === id);
   if (index === -1) {
-    res.json({ errorMessage: ec.tags.INVALID_ID })
+    res.json({ errorMessage: ec.tags.INVALID_ID });
   } else {
     data.tags.splice(index, 1);
-    res.json({ message: "Success" })
+    res.json({ message: "Success" });
   }
-}
+};
 
 tagsController.getById = (req, res) => {
   var id = req.params.id;
@@ -55,7 +55,7 @@ tagsController.getById = (req, res) => {
   } else {
     res.json(data.tags[index]);
   }
-}
+};
 
 tagsController.all = (req, res) => {
   res.json(data.tags);

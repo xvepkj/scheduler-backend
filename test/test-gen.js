@@ -20,17 +20,17 @@ test.tags.add.fail = th.gen.post.fail("/api/tags");
 test.tags.all = {};
 test.tags.all.pass = th.gen.get.pass("/api/tags", () => { return tagsApi.all(); });
 
-test.tags.getById = {}
+test.tags.getById = {};
 test.tags.getById.pass = th.gen.get.pass("/api/tags", (id) => { return tagsApi.getById(id); });
-test.tags.getById.fail = th.gen.get.fail("/api/tags")
+test.tags.getById.fail = th.gen.get.fail("/api/tags");
 
-test.tags.update = {}
+test.tags.update = {};
 test.tags.update.pass = th.gen.put.pass("/api/tags", (t) => { return tagsApi.update(t); });
-test.tags.update.fail = th.gen.put.fail("/api/tags")
+test.tags.update.fail = th.gen.put.fail("/api/tags");
 
-test.tags.delete = {}
+test.tags.delete = {};
 test.tags.delete.pass = th.gen.delete.pass("/api/tags", (b) => { return tagsApi.delete(b.id); });
-test.tags.delete.fail = th.gen.delete.fail("/api/tags")
+test.tags.delete.fail = th.gen.delete.fail("/api/tags");
 
 /* ******************************** */
 test.events = {};

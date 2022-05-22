@@ -21,7 +21,7 @@ tagsApi.add = (t) => {
 
 tagsApi.getById = (id) => {
   return data.tags.find(t => t.id === id);
-}
+};
 
 tagsApi.update = (t) => {
   var index = data.tags.findIndex(x => x.id === t.id);

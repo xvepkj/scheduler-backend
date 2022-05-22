@@ -33,13 +33,13 @@ export default function() {
   test.tags.getById.pass(
     "Gets a tag by id",
     "1"
-  )
+  );
 
   test.tags.getById.fail(
     "Get by id fails if tag not present",
     ec.tags.INVALID_ID,
     "2"
-  )
+  );
 
   test.tags.update.pass(
     "Updates a tag",
@@ -48,7 +48,7 @@ export default function() {
       name: "Miscellaneous",
       color: "#ffffff",
     },
-  )
+  );
 
   test.tags.all.pass("Get all tags");
 
@@ -60,14 +60,14 @@ export default function() {
       color: "#ffffff",
     },
     ec.tags.INVALID_ID
-  )
+  );
 
   test.tags.delete.pass(
     "Deletes a tag",
     {
       id: "0"
     }
-  )
+  );
 
   test.tags.delete.fail(
     "Delete fails if no tag with given id",
@@ -75,7 +75,7 @@ export default function() {
       id: "2"
     },
     ec.tags.INVALID_ID
-  )
+  );
 
   test.tags.all.pass("Get all tags");
 }
