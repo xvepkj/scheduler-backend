@@ -10,6 +10,10 @@ import activeTemplatesController from "../controllers/active-templates.js";
 var apiRouter = Router();
 apiRouter.post("/api/tags", tagsController.add);
 apiRouter.get("/api/tags", tagsController.all);
+apiRouter.get("/api/tags/:id", tagsController.getById);
+apiRouter.put("/api/tags", tagsController.update);
+apiRouter.delete("/api/tags", tagsController.delete);
+
 apiRouter.post("/api/events", eventsController.add);
 apiRouter.get("/api/events/:date", eventsController.all);
 apiRouter.delete("/api/events", eventsController.delete);
