@@ -5,7 +5,8 @@ ec.events = {};
 ec.templates = {};
 ec.activeTemplates = {};
 
-ec.tags.INVALID_REQ = "Tag not found";
+ec.tags.INVALID_ID = "No tag with given id exists";
+ec.tags.INVALID_SCHEMA = "Incorrect schema";
 
 ec.events.INCOMPLETE = "Illegal event";
 
