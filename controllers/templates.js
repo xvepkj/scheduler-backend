@@ -3,6 +3,7 @@ import ec from "../util/error-codes.js";
 import util from "../util/util.js";
 import jsonSchema from "jsonschema";
 import { templateSchema, partialEventSchema } from "../schemas/objects/templates.js";
+import validateEvent from "./events.js"
 const debug = Debug("app:templateController");
 
 var validator = new jsonSchema.Validator();
@@ -21,6 +22,8 @@ const eventTypes = Object.freeze({
   logged : "TIME_TRACKED"
 });
 
+const eventValid = (e) => validator.validate(e, partialEventSchema).valid
+
 templateController.add = (req, res) => {
   const template = req.body;
   template.id = "0";
@@ -28,9 +31,8 @@ templateController.add = (req, res) => {
   if(!valid) return res.json( { errorMessage : ec.templates.INVALID_TEMPLATE } );
   for(let i = 0; i < template.events.length; i++) {
     const e = template.events[i];
-    if(!util.time.isValid(e.startTime)) return res.json( { errorMessage : ec.events.INVALID_TIME_FORMAT } );
-    if(!util.time.isValid(e.endTime)) return res.json( { errorMessage : ec.events.INVALID_TIME_FORMAT } );
-    if(!util.time.isBeforeTime(e.startTime, e.endTime)) return res.json( { errorMessage : ec.events.INVALID_TIME_VALUES } );
+    const error = validateEvent(e, eventValid(e));
+    if(error != "") res.json({ errorMessage: error });
   }
   template.id = data.counter++;
   template.id = template.id.toString();
@@ -51,9 +53,8 @@ templateController.update = (req, res) => {
     if(!valid) return res.json( { errorMessage : ec.templates.INVALID_TEMPLATE } );
     for(let i = 0; i < template.events.length; i++) {
       const e = template.events[i];
-      if(!util.time.isValid(e.startTime)) return res.json( { errorMessage : ec.events.INVALID_TIME_FORMAT } );
-      if(!util.time.isValid(e.endTime)) return res.json( { errorMessage : ec.events.INVALID_TIME_FORMAT } );
-      if(!util.time.isBeforeTime(e.startTime, e.endTime)) return res.json( { errorMessage : ec.events.INVALID_TIME_VALUES } );
+      const error = validateEvent(e, eventValid(e));
+      if(error != "") res.json({ errorMessage: error });
     }
     const templateIndex = data.templates.indexOf(oldTemplate[0]);
     data.templates[templateIndex] = template;

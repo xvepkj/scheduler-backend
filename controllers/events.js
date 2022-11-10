@@ -11,7 +11,6 @@ const data = {
 };
 
 var validator = new jsonSchema.Validator();
-validator.addSchema(even)
 
 var eventController = {};
 
@@ -21,25 +20,20 @@ const eventTypes = Object.freeze({
   logged : "TIME_TRACKED"
 });
 
-const validateEvent = (e) => {
+const valid = (e) =>  { return validator.validate(e, eventSchema).valid; };
+
+export const validateEvent = (e, valid) => {
   var error = "";
-  if( !e.name || 
-    !e.date || 
-    !e.startTime || 
-    !e.endTime || 
-    !Object.values(eventTypes).includes(e.trackingType)) {
-    error = ec.events.INCOMPLETE; 
-  } 
+  if(!valid || (!Object.values(eventTypes).includes(e.trackingType) && e.trackingType != null)) error = ec.events.INCOMPLETE; 
   else if(!util.date.isValid(e.date)) error =  ec.events.INVALID_DATE_FORMAT; 
-  else if(!util.time.isValid(e.startTime)) error = ec.events.INVALID_TIME_FORMAT;
-  else if(!util.time.isValid(e.endTime)) error = ec.events.INVALID_TIME_FORMAT;
+  else if(!util.time.isValid(e.startTime) || !util.time.isValid(e.endTime))  error = ec.events.INVALID_TIME_FORMAT;
   else if(!util.time.isBeforeTime(e.startTime,e.endTime)) error = ec.events.INVALID_TIME_VALUES;
   return error;
 };
 
 eventController.add = (req, res) => {
-  const event = req.body;
-  const error = validateEvent(event);
+  const event = req.body; 
+  const error = validateEvent(event, valid);
   if(error !== "") res.json({ errorMessage : error });
   else {
     event.id = data.counter++;
@@ -54,7 +48,7 @@ eventController.update = (req, res) => {
   const updatedEvent =  data.events.filter((e) => event.id === e.id);
   if(updatedEvent.length === 0) res.json({errorMessage : ec.events.INVALID_REQ});
   else {
-    var error = validateEvent(event);
+    var error = validateEvent(event, valid);
     if(updatedEvent[0].date !== event.date) error = ec.events.DATE_UNEDITABLE;
     if(error !== "") res.json({ errorMessage : error });
     else {
@@ -79,4 +73,3 @@ eventController.delete = (req, res) => {
 };
 
 export default eventController;
-

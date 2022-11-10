@@ -45,6 +45,8 @@ activeTemplateController.update = (req, res) => {
 
   var index = data.activeTemplates.findIndex(at => activeTemplate.id === at.id);
   if (index == -1) return ec.activeTemplates.INVALID_ID;
+  if (activeTemplate.templateId != data.activeTemplates[index].templateId) 
+      res.json( { errorMessage: ec.activeTemplates.INVALID_TEMPLATE_ID } )
   data.activeTemplates[index] = activeTemplate;
   res.json(activeTemplate);
 };
