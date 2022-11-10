@@ -1,12 +1,17 @@
 import Debug from "debug";
 import ec from "../util/error-codes.js";
 import util from "../util/util.js";
+import jsonSchema from "jsonschema";
+import eventSchema from "../schemas/objects/events.js"
 const debug = Debug("app:eventController");
 
 const data = {
   events: [],
   counter: 0,
 };
+
+var validator = new jsonSchema.Validator();
+validator.addSchema(even)
 
 var eventController = {};
 
