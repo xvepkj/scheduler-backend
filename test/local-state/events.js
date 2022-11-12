@@ -1,4 +1,4 @@
-import { data as activeTemplateData } from "./active-templates";
+import { data as activeTemplateData } from "./active-templates.js";
 import { satisfies } from "../../controllers/active-templates";
 
 const data = {
