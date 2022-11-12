@@ -4,5 +4,6 @@ export const tagSchema = {
   "properties": {
     "name": { "type": "string" },
     "color": { "type": "string" } 
-  }
+  },
+  "required" : ["name", "color"]
 };

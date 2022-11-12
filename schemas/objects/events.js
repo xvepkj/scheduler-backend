@@ -1,17 +1,18 @@
+import jsonSchema from "jsonschema";
 
 export const eventSchema = {
   "id": "/event",
   "type": "object",
   "properties":{
-    "activeTemplateId": {"type": ["string", "null"]} ,
-    "date": "string",
-    "baseEvent" : "/baseEventSchema",
+    "activeTemplateId": {"type": ["string", "null"]} , 
+    "date": { "type": "string" },
+    "baseEvent" : { "$ref": "/baseEvent" },
     "trackingData": {"type": ["string", "null"] } }, 
-  "required": ["activeTemplateId", "date", "baseEvent"]
+  "required": ["date", "baseEvent"]
 };
 
 export const baseEventSchema = {
-  "id": "/partialEvent",
+  "id": "/baseEvent",
   "type": "object",
   "properties": {
     "name": { "type": "string" },
@@ -21,6 +22,5 @@ export const baseEventSchema = {
     "tagId" : { "type": ["string","null"] }
   },
   "required": ["name", "startTime", "endTime",
-    "trackingType", "tagId"]
+    "trackingType"]
 };
-

@@ -5,7 +5,7 @@ import jsonSchema from "jsonschema";
 import { templateSchema } from "../schemas/objects/templates.js";
 import { baseEventSchema } from "../schemas/objects/events.js";
 import { data as activeTemplateData } from "./active-templates.js";
-import validateEvent from "./events.js";
+import { validatebaseEvent } from "./events.js";
 const debug = Debug("app:templateController");
 
 var validator = new jsonSchema.Validator();
@@ -24,8 +24,6 @@ const eventTypes = Object.freeze({
   logged : "TIME_TRACKED"
 });
 
-const eventValid = (e) => validator.validate(e, baseEventSchema).valid;
-
 templateController.add = (req, res) => {
   const template = req.body;
   template.id = "0";
@@ -33,7 +31,7 @@ templateController.add = (req, res) => {
   if(!valid) return res.json( { errorMessage : ec.templates.INVALID_TEMPLATE } );
   for(let i = 0; i < template.events.length; i++) {
     const e = template.events[i];
-    const error = validateEvent(e, eventValid(e));
+    const error = validatebaseEvent(e);
     if(error != "") res.json({ errorMessage: error });
   }
   template.id = data.counter++;
@@ -55,7 +53,7 @@ templateController.update = (req, res) => {
     if(!valid) return res.json( { errorMessage : ec.templates.INVALID_TEMPLATE } );
     for(let i = 0; i < template.events.length; i++) {
       const e = template.events[i];
-      const error = validateEvent(e, eventValid(e));
+      const error = validatebaseEvent(e);
       if(error != "") res.json({ errorMessage: error });
     }
     const templateIndex = data.templates.indexOf(oldTemplate[0]);
@@ -67,7 +65,7 @@ templateController.update = (req, res) => {
 templateController.delete = (req, res) => {
   const oldTemplate = data.templates.filter ( (t) => req.body.id === t.id );
   if(oldTemplate.length === 0) res.json({ errorMessage : ec.templates.INVALID_REQ });
-  else if(activeTemplateData.filter((at) => at.templateId == req.body.id).length > 0) res.json( { errorMessage: ec.templates.ASSOCIATED_TEMPLATE });
+  else if(activeTemplateData.activeTemplates.filter((at) => at.templateId == req.body.id).length > 0) res.json( { errorMessage: ec.templates.ASSOCIATED_TEMPLATE });
   else {
     data.templates = data.templates.filter((t) => req.body.id !== t.id);
     res.json( { message : "Success"} );

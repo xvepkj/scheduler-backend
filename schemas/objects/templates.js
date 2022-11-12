@@ -1,4 +1,3 @@
-import { baseEventSchema } from "./events.js";
 
 export const templateSchema = {
   "id": "/template",
@@ -8,7 +7,7 @@ export const templateSchema = {
     "name": { "type" : "string" },
     "events" : {
       "type": "array",
-      "items":{ "$ref": "/baseEventSchema" }
+      "items":{ "$ref": "/baseEvent" }
     }
   },
   "required": [ "id", "events" ]

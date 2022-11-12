@@ -2,7 +2,7 @@ import Debug from "debug";
 import ec from "../util/error-codes.js";
 import util from "../util/util.js";
 import jsonSchema from "jsonschema";
-import { eventSchema } from "../schemas/objects/events.js";
+import { baseEventSchema, eventSchema } from "../schemas/objects/events.js";
 import { data as activeTemplateData } from "./active-templates.js";
 import { data as templateData } from "./templates.js";
 import { satisfies } from "./active-templates.js";
@@ -15,6 +15,7 @@ const data = {
 };
 
 var validator = new jsonSchema.Validator();
+validator.addSchema(baseEventSchema);
 
 var eventController = {};
 
@@ -37,7 +38,7 @@ const validateEvent = (e) => {
   if(!valid) error = ec.events.INCOMPLETE;
   else if(!util.date.isValid(e.date)) error =  ec.events.INVALID_DATE_FORMAT;
   else if(validatebaseEvent(e.baseEvent) != "") error = validatebaseEvent(e.baseEvent);
-  else if(validateTrackingData(e.trackingData) != "") error = validateTrackingData(e.trackingData);
+  else if(validateTrackingData(e) != "") error = validateTrackingData(e);
   return error;
 };
 
