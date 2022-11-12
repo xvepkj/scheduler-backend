@@ -26,20 +26,20 @@ util.date.isBefore = function (date1, date2) {
 util.date.isAfter = function(date1, date2) {
   let format = util.constants.DATE_FORMAT;
   return moment(date1, format).isAfter(date1, date2);
-}
+};
 
 util.date.getWeekdayNumber = function(d) {
   return moment(d, util.constants.DATE_FORMAT).day().toString(); 
-}
+};
 
 util.date.getMonthNumber = function(d) {
   return moment(d, util.constants.DATE_FORMAT).month().toString(); 
-}
+};
 
 util.date.difference = function(date1, date2) {
   return moment(date1, util.constants.DATE_FORMAT).
-    diff(moment(date2, util.constants.DATE_FORMAT), 'days');
-}
+    diff(moment(date2, util.constants.DATE_FORMAT), "days");
+};
 
 util.time = {};
 
@@ -60,7 +60,7 @@ util.string = {};
 
 util.string.isNullOrEmpty = function(s) {
   return s == null || s == "";
-}
+};
 
 export default util;
  

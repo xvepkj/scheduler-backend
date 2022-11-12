@@ -1,5 +1,7 @@
 import { data as activeTemplateData } from "./active-templates.js";
-import { satisfies } from "../../controllers/active-templates";
+import { satisfies } from "../../controllers/active-templates.js";
+import { data as templateData } from "./templates.js";
+import util from "../../util/util.js";
 
 const data = {
   events: []
@@ -11,10 +13,10 @@ var counter = 0;
 
 eventsApi.all = (d) => {
   var events = data.events.filter((e) => d === JSON.stringify(e.date) );
-  if(util.date.isAfter(req.params.date, util.date.current))
-   for(at in activeTemplateData) {
-      if(satisfies(at, req.params.date)) 
-        events = events.concat(templateData.data.filter((t) => at.templateId == t.id).events);
+  if(util.date.isAfter(d, util.date.current))
+    for(const activeTemplate of activeTemplateData) {
+      if(satisfies(activeTemplate, d)) 
+        events = events.concat(templateData.data.filter((t) => activeTemplate.templateId == t.id).events);
     }
   return events;  
 };

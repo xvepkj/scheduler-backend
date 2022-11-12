@@ -3,13 +3,13 @@ import ec from "../util/error-codes.js";
 import util from "../util/util.js";
 import jsonSchema from "jsonschema";
 import { templateSchema } from "../schemas/objects/templates.js";
-import { partialEventSchema } from "../schemas/objects/events.js";
+import { baseEventSchema } from "../schemas/objects/events.js";
 import { data as activeTemplateData } from "./active-templates.js";
-import validateEvent from "./events.js"
+import validateEvent from "./events.js";
 const debug = Debug("app:templateController");
 
 var validator = new jsonSchema.Validator();
-validator.addSchema(partialEventSchema);
+validator.addSchema(baseEventSchema);
 
 export const data = {
   templates: [],
@@ -24,7 +24,7 @@ const eventTypes = Object.freeze({
   logged : "TIME_TRACKED"
 });
 
-const eventValid = (e) => validator.validate(e, partialEventSchema).valid
+const eventValid = (e) => validator.validate(e, baseEventSchema).valid;
 
 templateController.add = (req, res) => {
   const template = req.body;
