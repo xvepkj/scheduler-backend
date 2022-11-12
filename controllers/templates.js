@@ -2,7 +2,9 @@ import Debug from "debug";
 import ec from "../util/error-codes.js";
 import util from "../util/util.js";
 import jsonSchema from "jsonschema";
-import { templateSchema, partialEventSchema } from "../schemas/objects/templates.js";
+import { templateSchema } from "../schemas/objects/templates.js";
+import { partialEventSchema } from "../schemas/objects/events.js";
+import { data as activeTemplateData } from "./active-templates.js";
 import validateEvent from "./events.js"
 const debug = Debug("app:templateController");
 
@@ -65,6 +67,7 @@ templateController.update = (req, res) => {
 templateController.delete = (req, res) => {
   const oldTemplate = data.templates.filter ( (t) => req.body.id === t.id );
   if(oldTemplate.length === 0) res.json({ errorMessage : ec.templates.INVALID_REQ });
+  else if(activeTemplateData.filter((at) => at.templateId == req.body.id).length > 0) res.json( { errorMessage: ec.templates.ASSOCIATED_TEMPLATE });
   else {
     data.templates = data.templates.filter((t) => req.body.id !== t.id);
     res.json( { message : "Success"} );

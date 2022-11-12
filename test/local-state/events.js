@@ -1,3 +1,6 @@
+import { data as activeTemplateData } from "./active-templates";
+import { satisfies } from "../../controllers/active-templates";
+
 const data = {
   events: []
 };
@@ -7,7 +10,13 @@ const eventsApi = {};
 var counter = 0;
 
 eventsApi.all = (d) => {
-  return data.events.filter((e) => d === JSON.stringify(e.date) );
+  var events = data.events.filter((e) => d === JSON.stringify(e.date) );
+  if(util.date.isAfter(req.params.date, util.date.current))
+   for(at in activeTemplateData) {
+      if(satisfies(at, req.params.date)) 
+        events = events.concat(templateData.data.filter((t) => at.templateId == t.id).events);
+    }
+  return events;  
 };
 
 eventsApi.add = (e) => {
