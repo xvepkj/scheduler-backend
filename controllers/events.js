@@ -42,7 +42,7 @@ const validateEvent = (e) => {
   return {
     valid : error == "",
     error : error
-  }  
+  };  
 };
 
 export const validatebaseEvent = (baseEvent) => {
@@ -53,7 +53,7 @@ export const validatebaseEvent = (baseEvent) => {
   return {
     valid : error == "",
     error : error 
-  }
+  };
 };
 
 eventController.add = (req, res) => {
