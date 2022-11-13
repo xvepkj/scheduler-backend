@@ -18,12 +18,6 @@ export const data = {
 
 var templateController = {};
 
-const eventTypes = Object.freeze({
-  untracked : "UNTRACKED",
-  tracked : "TRACKED",
-  logged : "TIME_TRACKED"
-});
-
 templateController.add = (req, res) => {
   const template = req.body;
   template.id = "0";
@@ -31,8 +25,8 @@ templateController.add = (req, res) => {
   if(!valid) return res.json( { errorMessage : ec.templates.INVALID_TEMPLATE } );
   for(let i = 0; i < template.events.length; i++) {
     const e = template.events[i];
-    const error = validatebaseEvent(e);
-    if(error != "") res.json({ errorMessage: error });
+    const checkbaseEvent = validatebaseEvent(e);
+    if(!checkbaseEvent.valid) res.json({ errorMessage: checkbaseEvent.error });
   }
   template.id = data.counter++;
   template.id = template.id.toString();
@@ -53,8 +47,8 @@ templateController.update = (req, res) => {
     if(!valid) return res.json( { errorMessage : ec.templates.INVALID_TEMPLATE } );
     for(let i = 0; i < template.events.length; i++) {
       const e = template.events[i];
-      const error = validatebaseEvent(e);
-      if(error != "") res.json({ errorMessage: error });
+      const checkbaseEvent = validatebaseEvent(e);
+      if(!checkbaseEvent.valid) res.json({ errorMessage: checkbaseEvent.error });
     }
     const templateIndex = data.templates.indexOf(oldTemplate[0]);
     data.templates[templateIndex] = template;

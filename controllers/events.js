@@ -22,13 +22,13 @@ var eventController = {};
 const eventTypes = Object.freeze({
   untracked : "UNTRACKED",
   tracked : "TRACKED",
-  logged : "TIME_TRACKED"
+  time_tracked : "TIME_TRACKED"
 });
 
 const validateTrackingData = (e) => {
-  if(e.trackingType == "UNTRACKED" && !util.string.isNullOrEmpty(e.trackingData)) return "";
-  if(e.trackingType == "TRACKED" && !(e.trackingData == "0" || e.trackingData == "1")) return ec.events.INVALID_TRACKING_DATA;
-  if(e.trackingType == "TIME_TRACKED" && parseFloat(e.trackingData) >= 0 && parseFloat(e.trackingData) <= 1) return ec.events.INVALID_TRACKING_DATA; 
+  if(e.trackingType == eventTypes.untracked && !util.string.isNullOrEmpty(e.trackingData)) return "";
+  if(e.trackingType == eventTypes.tracked && !(e.trackingData == "0" || e.trackingData == "1")) return ec.events.INVALID_TRACKING_DATA;
+  if(e.trackingType == eventTypes.time_tracked && parseFloat(e.trackingData) >= 0 && parseFloat(e.trackingData) <= 1) return ec.events.INVALID_TRACKING_DATA; 
   return "";
 }; 
 
@@ -37,23 +37,29 @@ const validateEvent = (e) => {
   const valid = validator.validate(e, eventSchema).valid;
   if(!valid) error = ec.events.INCOMPLETE;
   else if(!util.date.isValid(e.date)) error =  ec.events.INVALID_DATE_FORMAT;
-  else if(validatebaseEvent(e.baseEvent) != "") error = validatebaseEvent(e.baseEvent);
+  else if(!validatebaseEvent(e.baseEvent).valid) error = validatebaseEvent(e.baseEvent).error;
   else if(validateTrackingData(e) != "") error = validateTrackingData(e);
-  return error;
+  return {
+    valid : error == "",
+    error : error
+  }  
 };
 
 export const validatebaseEvent = (baseEvent) => {
   var error = "";
-  if(!util.time.isBeforeTime(baseEvent.startTime,baseEvent.endTime)) error = ec.events.INVALID_TIME_VALUES; 
-  else if(!util.time.isValid(baseEvent.startTime) || !util.time.isValid(baseEvent.endTime))  error = ec.events.INVALID_TIME_FORMAT;
+  if(!util.time.isValid(baseEvent.startTime) || !util.time.isValid(baseEvent.endTime))  error = ec.events.INVALID_TIME_FORMAT;
+  else if(!util.time.isBeforeTime(baseEvent.startTime,baseEvent.endTime)) error = ec.events.INVALID_TIME_VALUES; 
   else if(!Object.values(eventTypes).includes(baseEvent.trackingType) && baseEvent.trackingType != null) error = ec.events.INCOMPLETE; 
-  return error;
+  return {
+    valid : error == "",
+    error : error 
+  }
 };
 
 eventController.add = (req, res) => {
   const event = req.body; 
-  const error = validateEvent(event);
-  if(error !== "") res.json({ errorMessage : error });
+  const checkEvent = validateEvent(event);
+  if(!checkEvent.valid) res.json({ errorMessage : checkEvent.error });
   else {
     event.id = data.counter++;
     event.id = event.id.toString();
@@ -67,7 +73,7 @@ eventController.update = (req, res) => {
   const updatedEvent =  data.events.filter((e) => event.id === e.id);
   if(updatedEvent.length === 0) res.json({errorMessage : ec.events.INVALID_REQ});
   else {
-    var error = validateEvent(event);
+    var error = validateEvent(event).error;
     if(updatedEvent[0].date !== event.date) error = ec.events.DATE_UNEDITABLE;
     if(util.date.isBefore(e.date, util.date.current)) error = ec.events.INVALID_UPDATE_DELETE;
     if(e.activeTemplateId  != null && util.date.isAfter(e.date, util.date.current)) error = ec.events.FUTURE_TEMPLATE_EVENT;
