@@ -1,6 +1,11 @@
 import Debug from "debug";
 import ec from "../util/error-codes.js";
+import jsonSchema from "jsonschema";
+import { tagSchema } from "../schemas/objects/tags.js";
 const debug = Debug("app:tagsController");
+
+var validator = new jsonSchema.Validator();
+validator.addSchema(tagSchema);
 
 // To be removed after implementing actual service methods
 const data = {
@@ -12,7 +17,8 @@ var tagsController = {};
 
 tagsController.add = (req, res) => {
   const tag = req.body;
-  if (!tag.color || !tag.name) {
+  const validateResult = validator.validate(tag, tagSchema).valid;
+  if (!validateResult) {
     res.json({ errorMessage: ec.tags.INVALID_SCHEMA});
   } else {
     tag.id = (data.counter++).toString();
@@ -23,7 +29,8 @@ tagsController.add = (req, res) => {
 
 tagsController.update = (req, res) => {
   const tag = req.body;
-  if (!tag.color || !tag.name) { // replace by schema validation
+  const validateResult = validator.validate(tag, tagSchema).valid;
+  if (!validateResult) { // replace by schema validation
     res.json({ errorMessage: ec.tags.INVALID_SCHEMA});
     return;
   }

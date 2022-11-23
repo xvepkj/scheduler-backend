@@ -16,11 +16,19 @@ ec.events.INVALID_TIME_FORMAT = "Invalid Time Format";
 
 ec.events.INVALID_TIME_VALUES = "Invalid Time Values";
 
+ec.events.INVALID_TRACKING_DATA = "Invalid tracking data";
+
 ec.events.INVALID_REQ = "Event not found";
+
+ec.events.INVALID_UPDATE_DELETE = "Can't update or delete past events";
+
+ec.events.FUTURE_TEMPLATE_EVENT = "Can't update or delete future events"; 
 
 ec.templates.INVALID_TEMPLATE = "Illegal Template";
 
 ec.templates.INVALID_REQ = "Invalid Requirement";
+
+ec.templates.ASSOCIATED_TEMPLATE = "Can't delete template associated with associated active templates";
 
 ec.activeTemplates.INVALID_ID = "No active template with given id exists";
 

@@ -7,23 +7,11 @@ export const templateSchema = {
     "name": { "type" : "string" },
     "events" : {
       "type": "array",
-      "items":{ "$ref": "/partialEvent" }
+      "items":{ "$ref": "/baseEvent" }
     }
   },
   "required": [ "id", "events" ]
 };
 
-export const partialEventSchema = {
-  "id": "/partialEvent",
-  "type": "object",
-  "properties": {
-    "name": { "type": "string" },
-    "startTime" : { "type":  "string" },
-    "endTime" : { "type": "string" },
-    "trackingType" : { "type": "string" },
-    "tagId" : { "type": ["string","null"] }
-  },
-  "required": ["name", "startTime", "endTime",
-    "trackingType", "tagId"]
-};
+
 
