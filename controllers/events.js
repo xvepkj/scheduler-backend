@@ -73,17 +73,14 @@ eventController.update = (req, res) => {
   const updatedEvent =  data.events.filter((e) => event.id === e.id);
   if(updatedEvent.length === 0) res.json({errorMessage : ec.events.INVALID_REQ});
   else {
-    var error = validateEvent(event).error;
-    if(updatedEvent[0].date !== event.date) error = ec.events.DATE_UNEDITABLE;
-    if(util.date.isBefore(e.date, util.date.current)) error = ec.events.INVALID_UPDATE_DELETE;
-    if(e.activeTemplateId  != null && util.date.isAfter(e.date, util.date.current)) error = ec.events.FUTURE_TEMPLATE_EVENT;
-
-    if(error !== "") res.json({ errorMessage : error });
-    else {
-      const eventIndex = data.events.indexOf(updatedEvent[0]);
-      data.events[eventIndex] = event;
-      res.json(event);
-    }
+    var checkEvent = validateEvent(event);
+    if(!checkEvent.valid) res.json({errorMessage: checkEvent.error});
+    if(updatedEvent[0].date !== event.date) res.json({errorMessage: ec.events.DATE_UNEDITABLE});
+    if(util.date.isBefore(e.date, util.date.current)) res.json({errorMessage: ec.events.INVALID_UPDATE_DELETE});
+    if(e.activeTemplateId  != null && util.date.isAfter(e.date, util.date.current)) res.json({errorMessage: ec.events.FUTURE_TEMPLATE_EVENT});
+    const eventIndex = data.events.indexOf(updatedEvent[0]);
+    data.events[eventIndex] = event;
+    res.json(event);
   }
 };
 
